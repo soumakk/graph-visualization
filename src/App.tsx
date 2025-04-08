@@ -8,6 +8,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 echarts.use([TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer])
 
 function App() {
+	// const wallet = useAppSelector((state) => state.wallets.value)
 	const axisData = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 	const data = axisData.map(function (item, i) {
 		return Math.round(Math.random() * 1000 * (i + 1))
@@ -75,7 +76,7 @@ function App() {
 	}
 
 	return (
-		<div style={{ padding: '16px' }}>
+		<div className="h-screen">
 			<ReactECharts
 				option={options}
 				opts={{
@@ -84,6 +85,9 @@ function App() {
 				theme="light"
 				echarts={echarts}
 				onEvents={{}}
+				style={{
+					height: '100%',
+				}}
 			/>
 		</div>
 	)
