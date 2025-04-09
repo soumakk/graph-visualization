@@ -1,1 +1,24 @@
 @import 'tailwindcss';
+
+@theme {
+	--color-primary: oklch(62.3% 0.214 259.815);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-border: var(--border);
+}
+
+:root {
+	--background: #ffffff;
+	--foreground: #09090b;
+	--border: #dfdfdf;
+}
+
+.dark {
+	--background: #100c2a;
+	--foreground: #ffffff;
+	--border: #494852;
+}
+
+body {
+	@apply bg-background text-foreground border-border;
+}

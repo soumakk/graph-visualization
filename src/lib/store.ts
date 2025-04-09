@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import walletsReducer from './walletsSlice'
+import walletsSlice from './walletsSlice'
+import themeSlice from './themeSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const store = configureStore({
 	reducer: {
-		wallets: walletsReducer,
+		wallets: walletsSlice,
+		theme: themeSlice,
 	},
 })
 
