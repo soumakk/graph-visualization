@@ -18,7 +18,6 @@ export default function SidePanel() {
 
 	function handleExport() {
 		const chartInstance = chartRef.current?.getEchartsInstance()
-		console.log(chartInstance)
 		if (!chartInstance) return
 
 		const dataURL = chartInstance.getDataURL({

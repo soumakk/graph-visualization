@@ -24,7 +24,7 @@ export default function Visualizer() {
 		return Array.from(wallets)
 	}, [transactions])
 
-	const links = useMemo(() => {
+	const edges = useMemo(() => {
 		return transactions?.map((t) => ({
 			source: wallets.findIndex((w) => w === t.sender_address),
 			target: wallets.findIndex((w) => w === t.receiver_address),
@@ -74,7 +74,7 @@ export default function Visualizer() {
 					data: nodes,
 					edgeSymbol: ['none', 'arrow'],
 					edgeSymbolSize: [0, 8],
-					edges: links,
+					edges,
 					lineStyle: {
 						opacity: 1,
 					},
@@ -112,7 +112,7 @@ export default function Visualizer() {
 				},
 			},
 		}
-	}, [links, nodes])
+	}, [edges, nodes])
 
 	const onChartClick = (params) => {
 		if (params.dataType === 'node') {
@@ -124,6 +124,7 @@ export default function Visualizer() {
 	const onEvents = {
 		click: onChartClick,
 	}
+
 	return (
 		<ReactECharts
 			ref={chartRef}

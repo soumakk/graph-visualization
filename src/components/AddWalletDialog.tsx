@@ -1,10 +1,10 @@
 import { useForm } from '@tanstack/react-form'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
-import { Input } from './ui/input'
-import Button from './ui/button'
+import { z } from 'zod'
 import { useAppDispatch } from '../store/store'
 import { addNewNode } from '../store/walletsSlice'
-import { z } from 'zod'
+import Button from './ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
+import { Input } from './ui/input'
 
 const FormSchema = z.object({
 	sender_address: z.string().min(1, { message: 'This field is required' }),
