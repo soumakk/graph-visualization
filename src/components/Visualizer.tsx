@@ -1,5 +1,4 @@
 import copy from 'copy-to-clipboard'
-import { EChartsOption } from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useContext, useMemo } from 'react'
 import { ChartContext } from '../lib/ChartContext'
@@ -36,7 +35,7 @@ export default function Visualizer() {
 	}, [wallets, transactions])
 
 	const nodes = useMemo(() => {
-		return wallets.map((item, i) => ({
+		return wallets.map((item) => ({
 			id: item,
 			name: item,
 			symbolSize: 70,
@@ -56,7 +55,7 @@ export default function Visualizer() {
 		}))
 	}, [wallets])
 
-	const options: EChartsOption = useMemo(() => {
+	const options = useMemo(() => {
 		return {
 			series: [
 				{
