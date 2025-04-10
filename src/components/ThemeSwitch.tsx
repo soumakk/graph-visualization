@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../lib/store'
-import { toggleTheme } from '../lib/themeSlice'
+import { useAppDispatch, useAppSelector } from '../store/store'
+import { toggleTheme } from '../store/themeSlice'
 import { Switch } from './ui/switch'
 
 export default function ThemeSwitch() {

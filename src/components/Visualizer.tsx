@@ -1,11 +1,14 @@
+import copy from 'copy-to-clipboard'
 import { EChartsOption } from 'echarts'
 import ReactECharts from 'echarts-for-react'
-import { useMemo } from 'react'
-import { useAppDispatch, useAppSelector } from '../lib/store'
-import { selectNode } from '../lib/walletsSlice'
+import { useContext, useMemo } from 'react'
+import { ChartContext } from '../lib/ChartContext'
 import { sliceString } from '../lib/utils'
+import { useAppDispatch, useAppSelector } from '../store/store'
+import { selectNode } from '../store/walletsSlice'
 
 export default function Visualizer() {
+	const chartRef = useContext(ChartContext)
 	const theme = useAppSelector((s) => s.theme.mode)
 	const transactions = useAppSelector((s) => s.wallets.transactions)
 	const dispatch = useAppDispatch()
@@ -36,7 +39,7 @@ export default function Visualizer() {
 		return wallets.map((item, i) => ({
 			id: item,
 			name: item,
-			symbolSize: 80,
+			symbolSize: 70,
 			label: {
 				show: true,
 				position: 'inside',
@@ -47,13 +50,7 @@ export default function Visualizer() {
 			},
 			select: {
 				itemStyle: {
-					color: '#ffffff',
-					borderColor: '#3cb2ef',
 					borderWidth: 2,
-				},
-				label: {
-					show: true,
-					color: '#3cb2ef',
 				},
 			},
 		}))
@@ -63,21 +60,21 @@ export default function Visualizer() {
 		return {
 			series: [
 				{
-					data: nodes,
 					type: 'graph',
 					layout: 'force',
 					draggable: true,
 					roam: true,
 					force: {
-						edgeLength: 400,
-						repulsion: 50,
-						gravity: 0.0001,
-						layoutAnimation: true,
-						friction: 0.5,
+						edgeLength: 300,
+						repulsion: 500,
+						gravity: 0.1,
+						initLayout: 'circular',
+						friction: 0.03,
 					},
+					data: nodes,
 					edgeSymbol: ['none', 'arrow'],
 					edgeSymbolSize: [0, 8],
-					links,
+					edges: links,
 					lineStyle: {
 						opacity: 1,
 					},
@@ -91,6 +88,7 @@ export default function Visualizer() {
 				},
 			],
 			tooltip: {
+				show: true,
 				trigger: 'item',
 				backgroundColor: '#222',
 				borderColor: '#888',
@@ -107,18 +105,19 @@ export default function Visualizer() {
 						return `
 					  <strong>Amount:</strong> ${params.data.label || 'N/A'}<br/>
 					  <strong>Date:</strong> ${params.data.date}<br/>
-					  <strong>From:</strong> ${params.data.from}<br/>
-					  <strong>To:</strong> ${params.data.to}
+					  <strong>Sender:</strong> ${params.data.from}<br/>
+					  <strong>Receiver:</strong> ${params.data.to}
     					`
 					}
 				},
 			},
 		}
-	}, [])
+	}, [links, nodes])
 
 	const onChartClick = (params) => {
 		if (params.dataType === 'node') {
 			dispatch(selectNode(params.data.id))
+			copy(params.data.id)
 		}
 	}
 
@@ -127,6 +126,7 @@ export default function Visualizer() {
 	}
 	return (
 		<ReactECharts
+			ref={chartRef}
 			option={options}
 			opts={{
 				renderer: 'svg',
@@ -135,6 +135,7 @@ export default function Visualizer() {
 			onEvents={onEvents}
 			style={{
 				height: '100%',
+				width: 'calc(100vw - 300px)',
 			}}
 		/>
 	)
