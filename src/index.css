@@ -22,3 +22,10 @@
 body {
 	@apply bg-background text-foreground border-border;
 }
+
+html,
+body,
+#root {
+	height: 100%;
+	width: 100%;
+}

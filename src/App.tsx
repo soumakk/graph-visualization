@@ -8,7 +8,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<ChartProvider>
-				<div className="h-screen relative flex">
+				<div className="h-full relative flex overflow-hidden">
 					<SidePanel />
 					<Visualizer />
 				</div>
